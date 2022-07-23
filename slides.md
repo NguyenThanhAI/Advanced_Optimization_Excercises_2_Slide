@@ -385,6 +385,27 @@ Xét về giá trị tối thiểu của hàm loss:
 <img src="images/Thinh/Slide 11.2.png">
 
 ---
+
+# 2. So sánh ba thuật toán
+
+- Accuracy
+
+|   |Train Accuracy  |Val Accuracy  |
+|---|---|---|
+|Gradient Descent |97.48 % | 97.63% |
+|Minibatch| 97.59% | 97.95% |
+| SGD | 97.55% | 99.05%|
+
+- Loss:
+
+|   |Train Loss  |Val Loss  |
+|---|---|---|
+|Gradient Descent |0.0904 | 0.0858 |
+|Minibatch| 0.0905 | 0.0721 |
+| SGD | 0.0968 | 0.0445|
+
+
+---
 layout: two-cols
 ---
 
@@ -541,6 +562,34 @@ Giá trị hàm loss nhỏ nhất đạt được trên tập train (mỗi biể
 height="250" width="300">
 
 Giá trị hàm loss nhỏ nhất đạt được trên tập val (mỗi biểu đồ tương ứng với một thuật toán)
+
+---
+
+# 3. So sánh một số thuật toán tối ưu gradient bậc nhất
+
+- Các giá trị Accuracy cao nhất đạt được (thuật toán và step length tương ứng)
+
+| Max Train Accuracy | Thuật toán | Step length |
+|-----------|----------------|---------|
+| 97.71 % | Minibatch Adamax | 2 |
+
+| Max Val Accuracy | Thuật toán | Step length |
+|-----------|----------------|---------|
+| 99.21 % | Stochastic AMSGrad | 1 |
+
+---
+
+# 3. So sánh một số thuật toán tối ưu gradient bậc nhất
+
+- Các giá trị Loss thấp nhất đạt được (thuật toán và step length tương ứng)
+
+| Max Train Loss | Thuật toán | Step length |
+|-----------|----------------|---------|
+| 0.0889 | Adamax | 0.01 |
+
+| Max Val Loss | Thuật toán | Step length |
+|-----------|----------------|---------|
+| 0.0341 | Stochastic AMSGrad | 1 |
 
 ---
 
