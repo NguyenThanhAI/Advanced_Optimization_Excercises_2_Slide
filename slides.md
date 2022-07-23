@@ -385,6 +385,8 @@ Xét về giá trị tối thiểu của hàm loss:
 <img src="images/Thinh/Slide 11.2.png">
 
 ---
+layout: two-cols
+---
 
 # 3. So sánh một số thuật toán tối ưu gradient bậc nhất
 
@@ -400,6 +402,17 @@ Xét về giá trị tối thiểu của hàm loss:
   - AMSGrad
   - Nadam
   - AdaBelief
+
+::right::
+
+- Các step length được sử dụng:
+
+  - 0.001
+  - 0.01
+  - 0.1
+  - 1
+  - 2
+  - 5
 
 ---
 
