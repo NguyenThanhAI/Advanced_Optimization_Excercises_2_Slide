@@ -63,7 +63,7 @@ h1 {
 # MỤC LỤC
 
 ## 1. Thống kê mô tả và tiền xử lý dữ liệu
-## 2. So sánh các ba thuật toán Gradient Descent, Stochastic Gradient Descent và Batch Gradient Descent cho bài toán Logistic Regression với dữ liệu Voice Gender
+## 2. So sánh ba thuật toán Gradient Descent, Stochastic Gradient Descent và Batch Gradient Descent cho bài toán Logistic Regression với dữ liệu Voice Gender (So sánh ba thuật toán)
 ## 3. So sánh một số thuật toán tối ưu gradient bậc nhất
 
 ## 4. PHỤ LỤC
@@ -149,6 +149,243 @@ Correlation giữa các đặc trưng
 
 ---
 
+# 2. So sánh ba thuật toán
+
+- Hàm loss của Logistic Regression
+
+$$f(w)=\dfrac{1}{n}\sum_{i=1}^n \Big( -y_i x_i^T w + \ln(1 + e^{x_i^T w}) \Big)$$
+
+với $(x_i, y_i) \in \mathbb{R}^{k+1},i=1,2,\dots,n$ là cặp dữ liệu đầu vào và nhãn tương ứng và $w \in \mathbb{R}^k$
+
+- Ta có $\mathrm{dom}(f(w)=\mathbb{R}^{k}$, là một tập lồi. Ta tính Gradient của $f(w)$ theo $w$:
+
+$$\nabla f(w)=\dfrac{1}{n}\sum_{i=1}^n \Big( -y_i x_i + \dfrac{e^{x_i^Tw}}{1 + e^{x_i^T w}}x_i \Big)$$
+
+---
+
+# 2. So sánh ba thuật toán
+
+- Ta tính ma trận Hessian của $f(w)$ theo $w$:
+
+$$\nabla^2 f(x) = \dfrac{1}{n}\sum_{i=1}^n \dfrac{e^{x_i^Tw}(1 + e^{x_i^T w})-e^{2x_i^T w}}{(1 + e^{x_i^T w})^2}x_i x_i^T=\dfrac{1}{n}\sum_{i=1}^n \dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}x_i x_i^T$$
+
+- Ta xét số hạng thứ $i$:
+
+$$\dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}x_i x_i^T$$
+
+
+---
+
+# 2. So sánh ba thuật toán
+
+- Ta xét ma trận Hessian $\nabla^2 f(x)$:
+
+$$\dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}p^Tx_i x_i^T p=\Bigg(\sqrt{\dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}} x_i^Tp\Bigg)^T\Bigg(\sqrt{\dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}} x_i^Tp\Bigg)\geq 0 \thickspace \forall p \in \mathbb{R}^{k} \thickspace \forall x_i \in \mathbb{R}^{k}$$
+
+$$\Rightarrow p^T \nabla^2 f(x)p=\dfrac{1}{n}\sum_{i=1}^n \dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}p^Tx_i x_i^T=\dfrac{1}{n}\sum_{i=1}^n \Bigg(\sqrt{\dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}} x_i^Tp\Bigg)^T\Bigg(\sqrt{\dfrac{e^{x_i^Tw}}{(1 + e^{x_i^T w})^2}} x_i^Tp\Bigg)\geq 0 \thickspace \forall p \in \mathbb{R}^{k} \thickspace \forall x_i \in \mathbb{R}^{k}$$
+
+- Ta có $\mathrm{dom}(f(w))=\mathbb{R}^{k}$ là một tập lồi và $\nabla^2 f(x) \succeq 0$ nên $f(w)$ là hàm lồi
+
+<style>
+  .katex{font-size: 0.9em;}
+</style>
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- Fixed step sizes
+
+<img src="images/Thinh/Slide 1.1.png">
+
+::right::
+
+<img src="images/Thinh/Slide 1.2.png">
+
+---
+
+# 2. So sánh ba thuật toán
+
+- Fixed step sizes
+
+<img src="images/Thinh/Slide 2.1.png">
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- Fixed step size vs. Backtracking
+
+<img src="images/Thinh/Slide 3.1.png">
+
+::right::
+
+<img src="images/Thinh/Slide 3.2.png">
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- Fixed step size vs. Backtracking
+
+Số steps cần thiết để đạt ngưỡng Loss < 0.5
+
+- Fixed 0.01: 2084 steps
+- Fixed 0.1: 209 steps
+- Fixed 1: 21 steps
+- Fixed 2: 12 steps
+- Fixed 3: 20 steps
+- Fixed 4: 33 steps
+- Fixed 5: 37 steps
+- Fixed 10: 35 steps
+
+
+::right::
+
+Số steps cần thiết để đạt ngưỡng Loss < 0.1
+
+- Fixed 0.01: 20,000 steps mà vẫn chưa đạt được ngưỡng loss < 0.1 (loss sau 20,000 steps là: 0.2540252854003405)
+- Fixed 0.1: 20,000 steps mà vẫn chưa đạt được ngưỡng loss < 0.1 (loss sau 20,000 steps là: 0.11094859289238355)
+- Fixed 1: 4265 steps
+- Fixed 2: 2132 steps
+- Fixed 3: 1418 steps
+- Fixed 4: 1052 steps
+- Fixed 5: 822 steps
+- Fixed 10: 204 steps 
+
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- Fixed step size vs. Backtracking
+
+Số steps cần thiết để đạt ngưỡng Loss < 0.5
+
+- Backtracking (init_step_size = 1e-1): 209 outer steps, 209 steps total
+- Backtracking (init_step_size = 10): 6 outer steps, 21 steps total
+- Backtracking (init_step_size = 20): 6 outer steps, 28 steps total
+
+::right::
+
+Số steps cần thiết để đạt ngưỡng Loss < 0.1
+
+- Backtracking (init_step_size = 1e-1): 20,000 steps mà vẫn chưa đạt được ngưỡng loss < 0.1 (loss sau 20,000 steps là: 0.11094859289238355)
+- Backtracking (init_step_size = 10): 566 outer steps, 893 steps total
+- Backtracking (init_step_size = 20): 518 outer steps, 1316 steps total
+
+---
+
+# 2. So sánh ba thuật toán
+
+- GD vs. SGD vs. Mini Batch - By steps
+
+
+<img src="images/Thinh/Slide 5.1.png" height="200" width="400">
+
+<img src="images/Thinh/Slide 5.2.png" height="200" width="400">
+
+
+---
+
+# 2. So sánh ba thuật toán
+
+- GD vs. SGD vs. Mini Batch – By time
+
+<img src="images/Thinh/Slide 6.1.png">
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- GD vs. SGD vs. Mini Batch – By Wolfe II Condition ratio & Goldstein Condtion ratio
+
+Tỉ lệ số lượng step sizes (backtracking) thỏa mãn điều kiện Wolfe II:
+
+
+<img src="images/Thinh/Slide 7.1.png">
+
+::right::
+
+Tỉ lệ số lượng step sizes (backtracking) thỏa mãn điều kiện Goldstein:
+
+<img src="images/Thinh/Slide 7.2.png">
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- GD vs. SGD vs. Mini Batch – By accuracy (Training data)
+
+<img src="images/Thinh/Slide 8.1.png" height="150" width="300">
+
+::right::
+
+<img src="images/Thinh/Slide 8.2.png" height="150" width="300">
+
+<img src="images/Thinh/Slide 8.3.png" height="150" width="300">
+
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- GD vs. SGD vs. Mini Batch – By accuracy (Validating data)
+
+<img src="images/Thinh/Slide 9.1.png" height="150" width="300">
+
+::right::
+
+<img src="images/Thinh/Slide 9.2.png" height="150" width="300">
+
+<img src="images/Thinh/Slide 9.3.png" height="150" width="300">
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- GD vs. SGD vs. Mini Batch – ROC Curve & P-R Curve
+
+<img src="images/Thinh/Slide 10.1.png">
+
+::right::
+
+<img src="images/Thinh/Slide 10.2.png">
+
+---
+layout: two-cols
+---
+
+# 2. So sánh ba thuật toán
+
+- So sánh với thư viện sklearn
+
+Xét về giá trị tối thiểu của hàm loss:
+
+<img src="images/Thinh/Slide 11.1.png">
+
+::right::
+
+<img src="images/Thinh/Slide 11.2.png">
+
+---
+
 # 3. So sánh một số thuật toán tối ưu gradient bậc nhất
 
 - Một số thuật toán được sử dụng và so sánh:
@@ -189,7 +426,7 @@ Correlation giữa các đặc trưng
 # 3. So sánh một số thuật toán tối ưu gradient bậc nhất
 
 
-- <img src="images/3_train_acc_fix_optimizer.png" height="250" width="300">
+- <img src="images/3_train_acc_fix_optimizer.png" height="300" width="300">
 
 Độ chính xác trên tập train (mỗi biểu đồ tương ứng với một thuật toán, mỗi đường tương ứng với một step length)
 
@@ -417,3 +654,11 @@ $$\begin{cases}m_0 = 0\\ v_0 = 0\\ g_t = \nabla f(w_{t-1}) \\ m_t = \beta_1 m_{t
 
 $$\begin{cases}m_0 = 0\\ s_0 = 0\\ g_t = \nabla f(w_{t-1}) \\ m_t = \beta_1 m_{t-1} + (1-\beta_2) g_t \\ s_t = \beta_2 s_{t-1} + (1-\beta_2)(g_t - m_t)^2 + \epsilon\\
 \hat{m}_t = \dfrac{m_t}{1 - \beta_1^t} \\ \hat{s}_t = \dfrac{s_t}{1 - \beta_2^t} \\ w_t = w_{t-1} - \alpha \dfrac{\hat{m}_t}{\sqrt{\hat{s}_t} + \epsilon} \end{cases}$$
+
+---
+
+# 4. PHỤ LỤC
+
+- [Link code](https://github.com/NguyenThanhAI/Advanced_Optimization_Exercises_2)
+
+- [Link slide](https://github.com/NguyenThanhAI/Advanced_Optimization_Excercises_2_Slide)
